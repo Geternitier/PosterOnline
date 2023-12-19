@@ -13,7 +13,7 @@ const user = useUserStore()
       <el-card shadow="hover" v-if="user.username===''">
         <LoginForm/>
       </el-card>
-      <HelloWorld msg="Hello World!" v-if="user.username===''"/>
+      <HelloWorld msg="Hello World!" v-if="user.username!==''"/>
     </el-main>
   </el-container>
 </template>

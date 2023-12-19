@@ -14,7 +14,7 @@ const user = useUserStore()
         <RegisterForm/>
       </el-card>
 
-      <HelloWorld msg="Hello World!" v-if="user.username===''"/>
+      <HelloWorld msg="Hello World!" v-if="user.username!==''"/>
     </el-main>
   </el-container>
 </template>
