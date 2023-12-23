@@ -1,9 +1,12 @@
 <script setup lang="ts">
 
-import {reactive, ref} from "vue";
+import {h, reactive, ref} from "vue";
 import {ElNotification} from "element-plus";
 import {useRouter} from "vue-router";
+import axios from "axios";
+import {useUserStore} from "@/stores/user";
 
+const user = useUserStore();
 const router = useRouter();
 const ruleFormRef = ref()
 const ruleForm = reactive({
@@ -20,27 +23,47 @@ const rules = reactive({
     {required: true, message: '此字段为必填项', trigger: 'change' },
     {min: 8, max: 24, message: '密码长度不符合要求(8-24)', trigger: 'change'},
     {pattern: /^[\x21-\x7e]*$/, message: '密码只能包含字母,数字和符号', trigger: 'change'},
-    {pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/,
+    {pattern: /^(?=.*[a-zA-Z])(?=.*\d).*$/,
      message: '密码未达到复杂性要求:密码必须包含大小写字母和数字', trigger: 'change'}]
 })
 
-const submitForm = (formEL) => {
+const submitForm = async (formEL) => {
   if (!formEL) return
-  formEL.validate((valid) => {
+  await formEL.validate(async (valid) => {
     if (!valid) return
-    console.log('submit!')
+    try {
+      const response = await axios.post(
+          'http://localhost:8080/api/users/login',
+          {
+            username: ruleForm.username,
+            password: ruleForm.password
+          })
+      user.update(
+        response.data.username,
+        response.data.name,
+        response.data.phone,
+        response.data.status
+      )
+    } catch (error) {
+      console.log(error)
+      ElNotification({
+        offset: 70,
+        title: '登录错误',
+        message: h('i', { style: 'color: teal' }, error.response?.data.msg)
+      })
+      return
+    }
+
+    user.username = '1234'
+    user.name = '神高达'
+    user.phone = '15026997548'
+    user.status = true
 
     ElNotification({
       offset: 70,
       title: '登录成功'
     })
-    router.push('/')
-  }).catch((error) => {
-    console.log(error)
-    ElNotification({
-      offset: 70,
-      title: '登录失败'
-    })
+    await router.push('/')
   })
 }
 

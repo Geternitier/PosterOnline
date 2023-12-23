@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import {ref, reactive} from "vue"
-import {ElNotification} from "element-plus"
+import {ElNotification, type FormInstance} from "element-plus"
 import {useRouter} from "vue-router";
+import axios from "axios";
 
 const router = useRouter();
 const ruleFormRef = ref()
@@ -47,23 +48,34 @@ const rules = reactive({
     {pattern: /^1[3456789]\d{9}$/, message: '手机号码不符合要求', trigger: 'change'}]
 })
 
-const submitForm = (formEL) => {
+const submitForm = async (formEL: FormInstance | undefined) => {
   if (!formEL) return
-  formEL.validate((valid) => {
+  await formEL.validate(async (valid) => {
     if (!valid) return
-    console.log('submit!')
+    try {
+      const response = await axios.post(
+          'http://localhost:8080/api/users/register',
+          {
+            username: ruleForm.username,
+            password: ruleForm.password,
+            name: ruleForm.name,
+            phone: ruleForm.phone,
+            status: ruleForm.status
+          })
+    } catch (error) {
+      console.log(error)
+      ElNotification({
+        offset: 70,
+        title: '注册错误'
+      })
+      return
+    }
 
     ElNotification({
       offset: 70,
       title: '注册成功'
     })
-    router.push('/login')
-  }).catch((error) => {
-    console.log(error)
-    ElNotification({
-      offset: 70,
-      title: '注册错误'
-    })
+    await router.push('/login')
   })
 }
 
@@ -86,6 +98,8 @@ const submitForm = (formEL) => {
     </el-form-item>
     <el-form-item label="姓名" prop="name">
       <el-input v-model="ruleForm.name" type="text"/>
+    </el-form-item><el-form-item label="手机号码" prop="phone">
+      <el-input v-model="ruleForm.phone" type="text"/>
     </el-form-item>
     <el-form-item label="管理员">
       <el-switch v-model="ruleForm.status"/>

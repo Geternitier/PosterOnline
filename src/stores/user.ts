@@ -9,5 +9,17 @@ export const useUserStore = defineStore('user',
             phone: '',
             status: false
         }
+    },
+    getters: {
+        getUserName(){
+        }
+    },
+    actions: {
+        update(username: string, name: string, phone: string, status: boolean){
+            this.username = username;
+            this.name = name;
+            this.phone = phone;
+            this.status = status;
+        }
     }
 })

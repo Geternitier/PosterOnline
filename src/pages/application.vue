@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {useUserStore} from "@/stores/user";
+import ApplicationForm from "@/components/ApplicationForm.vue";
 
 const user = useUserStore()
 </script>
@@ -10,6 +11,9 @@ const user = useUserStore()
       <MenuComponent page-index="/application"/>
     </el-header>
     <el-main style="margin-top: 10vh">
+      <el-card shadow="hover" v-if="user.username!==''">
+        <ApplicationForm />
+      </el-card>
       <HelloWorld msg="Hello World!" v-if="user.username===''"/>
     </el-main>
   </el-container>
