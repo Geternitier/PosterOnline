@@ -3,6 +3,7 @@ import {ref, reactive} from "vue"
 import {ElNotification, type FormInstance} from "element-plus"
 import {useRouter} from "vue-router";
 import axios from "axios";
+import {SERVER_ADDR} from "@/config";
 
 const router = useRouter();
 const ruleFormRef = ref()
@@ -54,7 +55,7 @@ const submitForm = async (formEL: FormInstance | undefined) => {
     if (!valid) return
     try {
       const response = await axios.post(
-          'http://localhost:8080/api/users/register',
+          SERVER_ADDR+'/api/users/register',
           {
             username: ruleForm.username,
             password: ruleForm.password,

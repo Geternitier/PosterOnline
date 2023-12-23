@@ -10,7 +10,7 @@ const user = useUserStore()
       <MenuComponent page-index="/audit"/>
     </el-header>
     <el-main style="margin-top: 10vh">
-      <HelloWorld msg="Hello World!" v-if="user.username===''"/>
+      <Title v-if="user.username===''"/>
     </el-main>
   </el-container>
 </template>

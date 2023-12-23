@@ -5,6 +5,7 @@ import {ElNotification} from "element-plus";
 import {useRouter} from "vue-router";
 import axios from "axios";
 import {useUserStore} from "@/stores/user";
+import {SERVER_ADDR} from "@/config";
 
 const user = useUserStore();
 const router = useRouter();
@@ -33,7 +34,7 @@ const submitForm = async (formEL) => {
     if (!valid) return
     try {
       const response = await axios.post(
-          'http://localhost:8080/api/users/login',
+          SERVER_ADDR+'/api/users/login',
           {
             username: ruleForm.username,
             password: ruleForm.password
@@ -48,8 +49,7 @@ const submitForm = async (formEL) => {
       console.log(error)
       ElNotification({
         offset: 70,
-        title: '登录错误',
-        message: h('i', { style: 'color: teal' }, error.response?.data.msg)
+        title: '登录错误'
       })
       return
     }

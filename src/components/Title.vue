@@ -1,13 +1,14 @@
 <template>
   <div>
-    <p class="title">Which of the following is the correct name?</p>
+    <p class="title">Better Poster Management for Nanjing University.</p >
     <el-row justify="center">
-      <a class="title" href="javascript:alert('Goodbye, world!'); txt = 'a'; while(1){ txt = txt += 'a'; }">I23o6</a>
+      <a class="title" href="https://www.bilibili.com/video/BV1GJ411x7h7/" style="color: blue">PosterOnIine</a >
       &nbsp&nbsp
-      <a class="title" href="javascript:alert('Goodbye, world!'); txt = 'a'; while(1){ txt = txt += 'a'; }">l2306</a>
+      <a class="title" href="https://www.bilibili.com/video/BV1GJ411x7h7/" style="color: blue">Poster0nline</a >
       &nbsp&nbsp
-      <a class="title" href="javascript:alert('You\'re correct!')">l23o6</a> &nbsp&nbsp
-      <a class="title" href="javascript:alert('Goodbye, world!'); txt = 'a'; while(1){ txt = txt += 'a'; }">123o6</a>
+      <a class="title" href="javascript:alert('You\'re correct!')" style="color: blue">PosterOnline</a >
+      &nbsp&nbsp
+      <a class="title" href="https://www.bilibili.com/video/BV1GJ411x7h7/" style="color: blue">PosterOn1ine</a >
     </el-row>
   </div>
 </template>
