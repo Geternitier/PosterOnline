@@ -12,6 +12,7 @@ import {useRouter} from "vue-router";
 import axios from "axios";
 import {SERVER_ADDR} from "@/config";
 import verifyFileSize from "~/utils/file"
+import {useUserStore} from "@/stores/user";
 
 const poster = ref()
 const router = useRouter();
@@ -39,6 +40,7 @@ const rules = reactive({
   ]
 })
 
+const user = useUserStore()
 
 const submitForm = async (formEL: FormInstance | undefined) => {
   if (!formEL) return
@@ -48,6 +50,7 @@ const submitForm = async (formEL: FormInstance | undefined) => {
       formData.append('name', ruleForm.name)
       formData.append('date', ruleForm.date)
       formData.append('department', ruleForm.department)
+      formData.append('username', user.username)
       await axios.post(
           SERVER_ADDR + "/api/users/application",
           formData,
