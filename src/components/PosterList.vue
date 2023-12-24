@@ -1,14 +1,6 @@
 <script setup lang="tsx">
 import {Poster, usePosterStore} from "@/stores/poster";
-import dayjs from 'dayjs'
-import {type Column, ElNotification} from "element-plus";
-import {
-  ElButton,
-  ElIcon,
-  ElTag,
-  ElTooltip,
-  TableV2FixedDir,
-} from 'element-plus'
+import {ElButton, ElNotification} from "element-plus";
 import {ref} from "vue";
 defineProps<{
   index: string
@@ -53,8 +45,8 @@ function kickBack(poster: Poster){
           <el-col :span="12" style="padding-left: 20px">
             <el-row style="margin-bottom: 20px">{{props.row.description}}</el-row>
             <el-row>
-              <el-button type="primary" v-if="index==='未审核'" @click="pass(props.row)">通过</el-button>
-              <el-button v-if="index!=='已过期'" @click="kickBack(props.row)">撤回</el-button>
+              <el-button type="primary" v-if="index==='未审核'||index==='已撤回'" @click="pass(props.row)">通过</el-button>
+              <el-button v-if="index==='已审核'||index==='未审核'" @click="kickBack(props.row)">撤回</el-button>
             </el-row>
           </el-col>
           <div style="flex-grow: 1" />

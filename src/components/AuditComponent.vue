@@ -27,6 +27,9 @@ const handleSelect = (key: string, keyPath: string[]) => {
         <el-menu-item index="已审核">
           <span>已审核</span>
         </el-menu-item>
+        <el-menu-item index="已撤回">
+          <span>已撤回</span>
+        </el-menu-item>
         <el-menu-item index="已过期">
           <span>已过期</span>
         </el-menu-item>
