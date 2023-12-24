@@ -54,11 +54,6 @@ const submitForm = async (formEL) => {
       return
     }
 
-    user.username = '1234'
-    user.name = '神高达'
-    user.phone = '15026997548'
-    user.status = true
-
     ElNotification({
       offset: 70,
       title: '登录成功'

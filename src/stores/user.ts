@@ -20,6 +20,15 @@ export const useUserStore = defineStore('user',
             this.name = name;
             this.phone = phone;
             this.status = status;
+        },
+        reset(){
+            this.username = '';
+            this.name = '';
+            this.phone = '';
+            this.status = false;
         }
+    },
+    persist: {
+        enabled: true
     }
 })

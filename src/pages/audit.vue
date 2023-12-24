@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {useUserStore} from "@/stores/user";
+import AuditComponent from "@/components/AuditComponent.vue";
 
 const user = useUserStore()
 </script>
@@ -10,7 +11,7 @@ const user = useUserStore()
       <MenuComponent page-index="/audit"/>
     </el-header>
     <el-main style="margin-top: 10vh">
-      <Title v-if="user.username===''"/>
+      <AuditComponent v-if="user.username!==''"/>
     </el-main>
   </el-container>
 </template>

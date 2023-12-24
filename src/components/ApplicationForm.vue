@@ -5,22 +5,20 @@ import {
   ElNotification,
   type FormInstance, genFileId, type UploadInstance,
   type UploadProps,
-  type UploadRawFile,
-  type UploadUserFile
+  type UploadRawFile
 } from "element-plus";
-import {useRouter} from "vue-router";
 import axios from "axios";
 import {SERVER_ADDR} from "@/config";
-import verifyFileSize from "~/utils/file"
+import verifyFileSize from "@/utils/file"
 import {useUserStore} from "@/stores/user";
 
 const poster = ref()
-const router = useRouter();
 const ruleFormRef = ref()
 const ruleForm = reactive({
   name: '',
   date: '',
-  department: ''
+  department: '',
+  description: ''
 })
 
 const rules = reactive({
@@ -35,6 +33,10 @@ const rules = reactive({
     {required: true, message: '此字段为必填项', trigger: 'change'},
     {min: 2, max: 16, message: '部门名称长度不符合要求(2-16)', trigger: 'change'},
     {pattern: /^[\u4e00-\u9fa5\d]*$/, message: '部门名称只能包含中文和数字', trigger: 'change'}],
+  description: [
+    {required: true, message: '请填写描述信息', trigger: 'change'},
+    {min: 10, max: 100, message: '描述长度不符合要求(10-100)', trigger: 'change'}
+  ],
   poster: [
     {required: true, message: '请上传海报', trigger: 'change'}
   ]
@@ -51,6 +53,7 @@ const submitForm = async (formEL: FormInstance | undefined) => {
       formData.append('date', ruleForm.date)
       formData.append('department', ruleForm.department)
       formData.append('username', user.username)
+      formData.append('description', ruleForm.description)
       await axios.post(
           SERVER_ADDR + "/api/users/application",
           formData,
@@ -121,6 +124,9 @@ function handleChange(uploadFile, uploadFiles){
     </el-form-item>
     <el-form-item label="部门/组织" prop="department">
       <el-input v-model="ruleForm.department" type="text"/>
+    </el-form-item>
+    <el-form-item label="描述" prop="description">
+      <el-input v-model="ruleForm.description" :rows="3" type="textarea"/>
     </el-form-item>
     <el-form-item label="海报" prop="poster">
       <el-upload

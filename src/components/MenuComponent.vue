@@ -1,12 +1,23 @@
 <script setup lang="ts">
 
 import {useUserStore} from "@/stores/user";
+import {useRouter} from "vue-router";
+import {ElNotification} from "element-plus";
 
 defineProps({
   pageIndex: String
 })
 
 const user = useUserStore()
+const router = useRouter()
+function handleExit(){
+  user.reset()
+  ElNotification({
+    offset: 70,
+    title: '退出成功'
+  })
+  router.push("/")
+}
 
 </script>
 
@@ -27,6 +38,7 @@ const user = useUserStore()
     <div style="flex-grow: 1" />
     <el-menu-item index="/login" v-if="user.username===''">登录</el-menu-item>
     <el-menu-item index="/register" v-if="user.username===''">注册</el-menu-item>
+    <el-menu-item v-if="user.username!==''" @click="handleExit">退出</el-menu-item>
   </el-menu>
 </template>
 
