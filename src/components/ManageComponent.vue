@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {usePosterStore} from "@/stores/poster";
+import {SERVER_ADDR} from "@/config";
 
 const posters = usePosterStore()
 
@@ -8,12 +9,12 @@ const posters = usePosterStore()
 <template>
   <el-row style="min-height: 80vh">
     <el-col :span="6" style="max-height: 80vh">
-      <el-button style="padding: 20px" @click="posters.update('已审核')">更新海报列表</el-button>
+      <el-button style="padding: 20px" @click="posters.update('未审核')">更新海报列表</el-button>
       <el-divider/>
       <el-scrollbar style="height: 100%; max-height: 69vh" >
         <el-card v-for="poster in posters.posters" style="padding: 10px; width: 100%;margin-bottom: 5px">
           <el-col>
-            <el-image :src="poster.url" style="width: 100%"/>
+            <el-image :src="SERVER_ADDR+'/api/'+poster.filepath" style="width: 100%"/>
             <el-text style="padding: 5px">{{poster.name}}</el-text>
             <el-row><el-text style="padding: 5px">{{poster.date}}</el-text></el-row>
             <el-text style="padding: 5px">{{poster.department}}</el-text>
@@ -22,7 +23,6 @@ const posters = usePosterStore()
       </el-scrollbar>
     </el-col>
     <el-col :span="18">
-      <Title/>
     </el-col>
   </el-row>
 </template>

@@ -1,16 +1,18 @@
 <script setup lang="tsx">
 import {Poster, usePosterStore} from "@/stores/poster";
 import {ElButton, ElNotification} from "element-plus";
-import {ref} from "vue";
-defineProps<{
+import {computed, ref} from "vue";
+import axios from "axios";
+import {SERVER_ADDR} from "@/config";
+const props = defineProps<{
   index: string
 }>()
 
 const posters = usePosterStore()
 const dialogVisible = ref(false)
 const UrlOnShow = ref('')
-function clickImg(poster: Poster){
-  UrlOnShow.value = poster.url
+function clickImg(poster){
+  UrlOnShow.value = SERVER_ADDR+'/api/'+poster.filepath
   dialogVisible.value = true
 }
 
@@ -19,19 +21,53 @@ function handleClose(){
 }
 
 function pass(poster: Poster){
-  ElNotification({
-    offset: 70,
-    title: '通过：'+poster.name
-  })
-  posters.update(index)
+  const postUrl = SERVER_ADDR+'/api/posters/pass?name='+poster.name
+  console.log("POST "+postUrl)
+  axios.post(postUrl)
+      .then(response => {
+        if(response.status === 200){
+          console.log(response.data)
+          ElNotification({
+            offset: 70,
+            title: '通过《'+poster.name+'》成功',
+            duration: 1500
+          })
+          posters.update(props.index)
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        ElNotification({
+          offset: 70,
+          title: '通过《'+poster.name+'》失败',
+          duration: 1500
+        })
+      })
 }
 
-function kickBack(poster: Poster){
-  ElNotification({
-    offset: 70,
-    title: '撤回：'+poster.name
-  })
-  posters.update(index)
+function withdraw(poster: Poster){
+  const postUrl = SERVER_ADDR+'/api/posters/withdraw'
+  const data = {name: poster.name}
+  console.log("POST "+postUrl)
+  console.log(data)
+  axios.post(postUrl, data)
+      .then(response => {
+        if(response.status === 200){
+          ElNotification({
+            offset: 70,
+            title: '撤回《'+poster.name+'》成功'
+          })
+          posters.update(props.index)
+          return
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        ElNotification({
+          offset: 70,
+          title: '撤回《'+poster.name+'》失败'
+        })
+      })
 }
 
 </script>
@@ -46,18 +82,18 @@ function kickBack(poster: Poster){
             <el-row style="margin-bottom: 20px">{{props.row.description}}</el-row>
             <el-row>
               <el-button type="primary" v-if="index==='未审核'||index==='已撤回'" @click="pass(props.row)">通过</el-button>
-              <el-button v-if="index==='已审核'||index==='未审核'" @click="kickBack(props.row)">撤回</el-button>
+              <el-button v-if="index==='已审核'||index==='未审核'" @click="withdraw(props.row)">撤回</el-button>
             </el-row>
           </el-col>
           <div style="flex-grow: 1" />
           <el-col :span="6" class="demo-image__preview">
             <el-image
                 style="width: 100px; height: 100px"
-                :src="props.row.url"
+                :src="SERVER_ADDR+'/api/'+props.row.filepath"
                 :zoom-rate="1.2"
                 :max-scale="7"
                 :min-scale="0.2"
-                fit="fit"
+                :alt="props.row.name"
                 @click="clickImg(props.row)"
             />
           </el-col>

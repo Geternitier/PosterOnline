@@ -49,14 +49,16 @@ const submitForm = async (formEL) => {
       console.log(error)
       ElNotification({
         offset: 70,
-        title: '登录错误'
+        title: '登录错误',
+        duration: 1500
       })
       return
     }
 
     ElNotification({
       offset: 70,
-      title: '登录成功'
+      title: '登录成功',
+      duration: 1500
     })
     await router.push('/')
   })

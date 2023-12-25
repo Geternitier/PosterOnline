@@ -11,12 +11,14 @@ import axios from "axios";
 import {SERVER_ADDR} from "@/config";
 import verifyFileSize from "@/utils/file"
 import {useUserStore} from "@/stores/user";
+import {useRouter} from "vue-router";
 
+const router = useRouter()
 const poster = ref()
 const ruleFormRef = ref()
 const ruleForm = reactive({
   name: '',
-  date: '',
+  date: Date,
   department: '',
   description: ''
 })
@@ -36,9 +38,6 @@ const rules = reactive({
   description: [
     {required: true, message: '请填写描述信息', trigger: 'change'},
     {min: 10, max: 100, message: '描述长度不符合要求(10-100)', trigger: 'change'}
-  ],
-  poster: [
-    {required: true, message: '请上传海报', trigger: 'change'}
   ]
 })
 
@@ -49,13 +48,15 @@ const submitForm = async (formEL: FormInstance | undefined) => {
   await formEL.validate(async (valid) => {
     if (!valid) return
     try {
+      const date = formatDate(new Date(ruleForm.date))
       formData.append('name', ruleForm.name)
-      formData.append('date', ruleForm.date)
+      formData.append('date', date)
       formData.append('department', ruleForm.department)
       formData.append('username', user.username)
       formData.append('description', ruleForm.description)
+      console.log(date)
       await axios.post(
-          SERVER_ADDR + "/api/users/application",
+          SERVER_ADDR + "/api/application",
           formData,
           {
             headers: {
@@ -68,9 +69,22 @@ const submitForm = async (formEL: FormInstance | undefined) => {
         offset: 70,
         title: '提交错误'
       })
+      return
     }
+    ElNotification({
+      offset: 70,
+      title: '提交成功'
+    })
+    await router.push('/')
   })
 }
+
+const formatDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 月份是从0开始的，所以+1
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
 
 const handleRemove: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
   console.log(uploadFile, uploadFiles)
@@ -120,6 +134,7 @@ function handleChange(uploadFile, uploadFiles){
     <el-form-item label="活动时间" prop="date">
       <el-date-picker v-model="ruleForm.date"
                       type="date"
+                      format="YYYY-MM-DD"
                       placeholder="选择日期"/>
     </el-form-item>
     <el-form-item label="部门/组织" prop="department">

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import {useRouter} from "vue-router";
 import {ref} from "vue";
 import {usePosterStore} from "@/stores/poster";
 
