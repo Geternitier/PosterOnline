@@ -10,7 +10,7 @@ const user = useUserStore()
       <MenuComponent page-index="/manage"/>
     </el-header>
     <el-main style="margin-top: 10vh">
-      <HelloWorld msg="Hello World!" v-if="!user.status"/>
+      <ManageComponent/>
     </el-main>
   </el-container>
 </template>
