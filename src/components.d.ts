@@ -48,6 +48,7 @@ declare module 'vue' {
     MenuComponent: typeof import('./components/MenuComponent.vue')['default']
     PosterList: typeof import('./components/PosterList.vue')['default']
     PosterListItem: typeof import('./components/PosterListItem.vue')['default']
+    PosterOnShow: typeof import('./components/PosterOnShow.vue')['default']
     RegisterForm: typeof import('./components/RegisterForm.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

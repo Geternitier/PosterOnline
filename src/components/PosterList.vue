@@ -46,11 +46,9 @@ function pass(poster: Poster){
 }
 
 function withdraw(poster: Poster){
-  const postUrl = SERVER_ADDR+'/api/posters/withdraw'
-  const data = {name: poster.name}
+  const postUrl = SERVER_ADDR+'/api/posters/withdraw?name='+poster.name
   console.log("POST "+postUrl)
-  console.log(data)
-  axios.post(postUrl, data)
+  axios.post(postUrl)
       .then(response => {
         if(response.status === 200){
           ElNotification({

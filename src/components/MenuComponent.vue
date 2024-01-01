@@ -14,7 +14,8 @@ function handleExit(){
   user.reset()
   ElNotification({
     offset: 70,
-    title: '退出成功'
+    title: '退出成功',
+    duration: 1500
   })
   router.push("/")
 }

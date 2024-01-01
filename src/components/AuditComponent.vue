@@ -5,7 +5,6 @@ import {usePosterStore} from "@/stores/poster";
 const poster = usePosterStore()
 const auditIndex = ref("未审核")
 const handleSelect = (key: string, keyPath: string[]) => {
-  console.log(key)
   auditIndex.value = key
   poster.update(key)
 }

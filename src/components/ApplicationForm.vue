@@ -67,13 +67,15 @@ const submitForm = async (formEL: FormInstance | undefined) => {
       console.log(error)
       ElNotification({
         offset: 70,
-        title: '提交错误'
+        title: '提交错误',
+        duration: 1500
       })
       return
     }
     ElNotification({
       offset: 70,
-      title: '提交成功'
+      title: '提交成功',
+      duration: 1500
     })
     await router.push('/')
   })

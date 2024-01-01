@@ -47,7 +47,10 @@ export const usePosterStore = defineStore('poster',
         },
         actions: {
             update(content: string) {
-                const num = status2int.indexOf(content) + 1
+                let num = status2int.indexOf(content) + 1
+                if(num===0){
+                    num = 4
+                }
                 const updateUrl = SERVER_ADDR + '/api/posters' + num
                 console.log("GET "+updateUrl)
                 axios.get(updateUrl)
