@@ -4,35 +4,29 @@ import {SERVER_ADDR} from "@/config";
 import {ElNotification} from "element-plus";
 
 export class Poster {
-    constructor(name: string,
-                date: string,
-                depart: string,
-                describ: string,
-                url: string) {
+    constructor(
+        name: string,
+        date: string,
+        depart: string,
+        describ: string,
+        filepath: string) {
         this.name = name
         this.date = date
         this.department = depart
         this.description = describ
-        this.url = url
+        this.filepath = filepath
     }
 
     name= ''
     date= ''
     department = ''
     description = ''
-    url = ''
+    filepath = ''
 }
 
 const status2int = ["已审核", "未审核", "已撤回", "未撤回"]
 
-const postersList = [
-    new Poster(
-        "神高达",
-        "2012-11-11",
-        "高达部",
-        "多蒙·卡修。新日本，made in China",
-        "https://router.vuejs.org/logo.svg")
-]
+const postersList: Poster[] = []
 
 export const usePosterStore = defineStore('poster',
     {

@@ -11,7 +11,7 @@ const props = defineProps<{
 const posters = usePosterStore()
 const dialogVisible = ref(false)
 const UrlOnShow = ref('')
-function clickImg(poster){
+function clickImg(poster: Poster){
   UrlOnShow.value = SERVER_ADDR+'/api/'+poster.filepath
   dialogVisible.value = true
 }

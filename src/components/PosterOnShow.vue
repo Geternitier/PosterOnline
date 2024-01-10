@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import {ref} from "vue";
 
-const originList = [
-  {key: 'babala', image: 'src/assets/2022Concert/babala.png'},
-  {key: 'shenhe', image: 'src/assets/2022Concert/shenhe.png'},
-  {key: 'wanye', image: 'src/assets/2022Concert/wanye.png'},
-  {key: 'yunjin', image: 'src/assets/2022Concert/yunjin.png'}
-]
+const originList = []
 
 const imageList = ref([
   {key: 'babala', image: 'src/assets/2022Concert/babala.png'},

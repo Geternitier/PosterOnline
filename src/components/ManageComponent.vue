@@ -2,8 +2,16 @@
 import {usePosterStore} from "@/stores/poster";
 import {SERVER_ADDR} from "@/config";
 import PosterOnShow from "@/components/PosterOnShow.vue";
+import {ref} from "vue";
 
 const posters = usePosterStore()
+
+const imageList = ref([
+  {key: 'babala', image: 'src/assets/2022Concert/babala.png'},
+  {key: 'shenhe', image: 'src/assets/2022Concert/shenhe.png'},
+  {key: 'wanye', image: 'src/assets/2022Concert/wanye.png'},
+  {key: 'yunjin', image: 'src/assets/2022Concert/yunjin.png'}
+])
 
 </script>
 
